@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "name": "Olive",
+    "author": "Allan H. ('28)"
+  },
+  "styling": {
+    "base": "light",
+    "background": "#f5f6f1",
+    "secondaryBackground": "#e4e8dd",
+    "accent": "#6f8a63",
+    "text": {
+      "primary": "#2f3a2a",
+      "secondary": "#4a5a44",
+      "tertiary": "#6d7f67"
+    },
+    "iconCards": {
+      "regular": "#ffffff"
+    }
+  }
+}
