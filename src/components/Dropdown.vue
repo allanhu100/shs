@@ -54,10 +54,10 @@ let optionShifts: number[] = [];
 
 // if modelValue is out of bounds (including when options change at runtime), reset to 0
 watch(() => [modelValue, options.length], () => {
-  if (modelValue < 0 || modelValue >= options.length) {
+  if (options.length > 0 && (modelValue < 0 || modelValue >= options.length)) {
     emit('update:modelValue', 0);
   }
-}, { immediate: true });
+}, { immediate: true, flush: 'post' });
 
 const remainingOptions = computed((): string[] => {
   const remaining = options.slice(0);
@@ -67,7 +67,7 @@ const remainingOptions = computed((): string[] => {
 
 const formattedOptions = computed((): { name: string; style: any; index: number }[] => {
   const opts = (showSelectedAsOption ? options : remainingOptions.value) as string[];
-  return opts.map((option) => {
+  return opts.map((option, i) => {
     const style = {} as any;
     if (align === 'center') {
       style.left = '50%';
@@ -76,10 +76,12 @@ const formattedOptions = computed((): { name: string; style: any; index: number 
       style[align] = 0;
     }
 
+    // Preserve original index to handle duplicate option strings correctly
+    const originalIndex = showSelectedAsOption ? i : (i < modelValue ? i : i + 1);
     return {
       name: option,
       style,
-      index: options.indexOf(option), // if we're using remainingOptions, the original indexes are lost
+      index: originalIndex,
     };
   });
 });
@@ -105,7 +107,7 @@ watch(() => options, (): void => {
 watch(() => direction, (): void => {
   closeDropdown();
   arrowRotateAmount.value = direction === 'down' ? 0 : 180;
-});
+}, { immediate: true });
 
 function toggleDropdown(): void {
   arrowRotateAmount.value += (arrowRotateAmount.value >= 180) ? -180 : 180;
