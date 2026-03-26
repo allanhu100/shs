@@ -56,16 +56,11 @@ function showTooltip(event) {
       }
       if (top < 10) top = rect.bottom + 8 // flip to bottom if no room above
 
-      // Get current accent color from CSS variables
-      const accentColor = getComputedStyle(document.documentElement)
-        .getPropertyValue('--accent')
-        .trim()
-
       tooltipStyle.value = {
         left: `${left}px`,
         top: `${top}px`,
-        background: accentColor,
-        borderColor: accentColor,
+        background: var(--accent),
+        borderColor: var(--accent),
       }
     }
   })
@@ -90,8 +85,8 @@ function toggleTooltip(event) {
   align-items: center
 
 .info-icon
-  color: currentColor
-  opacity: 0.9
+  color: var(--accent)
+  opacity: 0.8
   cursor: help
   transition: opacity 0.2s
   display: flex
@@ -105,9 +100,9 @@ function toggleTooltip(event) {
   max-width: 200px
   width: max-content
   padding: 10px 12px
-  background: rgba(0, 0, 0, 0.95)
+  background: var(--accent)
   color: white
-  border: 1px solid rgba(255, 255, 255, 0.1)
+  border: 1px solid var(--accent)
   border-radius: 8px
   font-size: 12px
   line-height: 1.5
